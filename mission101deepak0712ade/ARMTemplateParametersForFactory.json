@@ -1,0 +1,27 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "mission101deepak0712ade"
+		},
+		"ADLS_STORAGE_AC_accountKey": {
+			"value": ""
+		},
+		"AzureDataLakeStorage1_accountKey": {
+			"value": ""
+		},
+		"Sql_DS_connectionString": {
+			"value": ""
+		},
+		"ADLS_STORAGE_AC_properties_typeProperties_url": {
+			"value": "https://mission100deepakadls.dfs.core.windows.net/"
+		},
+		"AzureDataLakeStorage1_properties_typeProperties_url": {
+			"value": "https://mission100deepakadls.dfs.core.windows.net/"
+		},
+		"storage event demo trigger_properties_typeProperties_scope": {
+			"value": "/subscriptions/b051f817-ad6e-4ef8-947e-0705f938a997/resourceGroups/mission100deepak/providers/Microsoft.Storage/storageAccounts/mission100deepakadls"
+		}
+	}
+}
