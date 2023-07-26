@@ -10,8 +10,8 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
-				"fileName": "product.csv",
-				"folderPath": "Question 9",
+				"fileName": " SalesLT.Product.txt",
+				"folderPath": "DataFlowAssesement",
 				"fileSystem": "landing"
 			},
 			"columnDelimiter": ",",
