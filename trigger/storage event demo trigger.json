@@ -1,0 +1,17 @@
+{
+	"name": "storage event demo trigger",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/landing/blobs/DataFlowAssesement",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/b051f817-ad6e-4ef8-947e-0705f938a997/resourceGroups/mission100deepak/providers/Microsoft.Storage/storageAccounts/mission100deepakadls",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
