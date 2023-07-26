@@ -1,0 +1,68 @@
+{
+	"name": "Ingestion_Address_SQLDB_ADLS_Folder",
+	"properties": {
+		"description": "copying address table data in csv in address directory",
+		"activities": [
+			{
+				"name": "copying_address_table_to_address_dir",
+				"description": "address data table data to address directory in landing",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".csv"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Genric_DS",
+						"type": "DatasetReference",
+						"parameters": {
+							"schemaname": "salesLT",
+							"tablename": "Address"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Generic_ADLS_Stg",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-07-20T07:43:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

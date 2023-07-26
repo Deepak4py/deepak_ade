@@ -1,0 +1,63 @@
+{
+	"name": "Ingestion_Customer_JOIN_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data from customer and customer_address table",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "SELECT cust.FirstName+' '+COALESCE(cust.MiddleName,'')+ ' '+cust.LastName as customer_name,\n(SELECT COALESCE(AddressLine1,'') + ' '+ COALESCE(AddressLine2,'') +','+COALESCE(City,'') +','+ COALESCE(StateProvince,'')+',' + COALESCE(CountryRegion,'')+','+\nCOALESCE(PostalCode,'') as address_name FROM [SalesLT].[Address] WHERE AddressID=custaddr.AddressID) AS customer_address FROM [SalesLT].[Customer] cust JOIN [SalesLT].[CustomerAddress] custaddr on cust.CustomerID=custaddr.CustomerID ;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SQL_Dataset",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ADLS_Dataset",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-07-20T07:44:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

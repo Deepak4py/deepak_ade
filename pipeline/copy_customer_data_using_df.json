@@ -1,0 +1,46 @@
+{
+	"name": "copy_customer_data_using_df",
+	"properties": {
+		"activities": [
+			{
+				"name": "Data flow1",
+				"type": "ExecuteDataFlow",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataflow": {
+						"referenceName": "copy_customer_data",
+						"type": "DataFlowReference",
+						"datasetParameters": {
+							"source1": {
+								"Foldername": "DataFlowAssesement",
+								"filename": "SalesLT.Customer-xRyuaEu2p7.txt"
+							}
+						}
+					},
+					"compute": {
+						"coreCount": 8,
+						"computeType": "General"
+					},
+					"traceLevel": "None",
+					"cacheSinks": {
+						"firstRowOnly": true
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "Assignment 8"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-20T07:44:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

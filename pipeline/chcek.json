@@ -1,0 +1,44 @@
+{
+	"name": "chcek",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "NEW_GENERICS_ADLS_DATASET",
+						"type": "DatasetReference",
+						"parameters": {
+							"Foldername": "DataFlowAssesement",
+							"filename": "SalesLT.Product.txt"
+						}
+					},
+					"fieldList": [
+						"exists"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-07-20T11:02:39Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,47 @@
+{
+	"name": "lookup for product",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "NEW_GENERICS_ADLS_DATASET",
+						"type": "DatasetReference",
+						"parameters": {
+							"Foldername": "ASSIGNMENT-7/Question-5",
+							"filename": "Product.csv"
+						}
+					},
+					"fieldList": [
+						"structure"
+					],
+					"storeSettings": {
+						"type": "AzureBlobFSReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			}
+		],
+		"folder": {
+			"name": "ASSIGNMENT 7"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-20T07:44:00Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

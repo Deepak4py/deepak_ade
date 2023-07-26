@@ -1,0 +1,9 @@
+{
+	"name": "mission101deepak0712ade",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "e266d35d-25b5-42ef-8e48-ff134befa2ea",
+		"tenantId": "6b797e64-ff05-4591-8ebb-84e0cb16bc19"
+	}
+}
