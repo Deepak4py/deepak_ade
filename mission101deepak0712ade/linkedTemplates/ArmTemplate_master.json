@@ -27,6 +27,10 @@
 			"type": "string",
 			"defaultValue": "https://mission100deepakadls.dfs.core.windows.net/"
 		},
+		"RestAPIS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://restcountries.com/v3.1/"
+		},
 		"storage event demo trigger_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/b051f817-ad6e-4ef8-947e-0705f938a997/resourceGroups/mission100deepak/providers/Microsoft.Storage/storageAccounts/mission100deepakadls"
@@ -72,6 +76,9 @@
 					},
 					"AzureDataLakeStorage1_properties_typeProperties_url": {
 						"value": "[parameters('AzureDataLakeStorage1_properties_typeProperties_url')]"
+					},
+					"RestAPIS_properties_typeProperties_url": {
+						"value": "[parameters('RestAPIS_properties_typeProperties_url')]"
 					},
 					"storage event demo trigger_properties_typeProperties_scope": {
 						"value": "[parameters('storage event demo trigger_properties_typeProperties_scope')]"

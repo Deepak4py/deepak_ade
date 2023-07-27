@@ -20,6 +20,9 @@
 		"AzureDataLakeStorage1_properties_typeProperties_url": {
 			"value": "https://mission100deepakadls.dfs.core.windows.net/"
 		},
+		"RestAPIS_properties_typeProperties_url": {
+			"value": "https://restcountries.com/v3.1/"
+		},
 		"storage event demo trigger_properties_typeProperties_scope": {
 			"value": "/subscriptions/b051f817-ad6e-4ef8-947e-0705f938a997/resourceGroups/mission100deepak/providers/Microsoft.Storage/storageAccounts/mission100deepakadls"
 		}
