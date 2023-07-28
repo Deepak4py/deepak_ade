@@ -76,7 +76,10 @@
 				"userProperties": [],
 				"typeProperties": {
 					"url": "https://prod-90.eastus.logic.azure.com:443/workflows/c8185515745b43f4bd46ea6be8ca9500/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2GFllKjOFO0vzsjDc8CLMaMkvDGCE_K4Hzo2YUmAK-4",
-					"method": "POST"
+					"method": "POST",
+					"body": {
+						"status": "failed"
+					}
 				}
 			}
 		],
