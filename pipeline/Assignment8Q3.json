@@ -22,6 +22,10 @@
 							"CustomerAddress": {
 								"Foldername": "DataFlowAssesement",
 								"filename": "Customeraddress.txt"
+							},
+							"sink1": {
+								"FolderName": "rgrdg",
+								"Filename": "gfgfdgd"
 							}
 						}
 					},
