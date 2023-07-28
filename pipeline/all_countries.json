@@ -25,14 +25,12 @@
 						}
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
 							"type": "AzureBlobFSWriteSettings"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false
@@ -48,14 +46,38 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "NEW_GENERICS_ADLS_DATASET",
+						"referenceName": "Parquet_file_ds",
 						"type": "DatasetReference",
 						"parameters": {
-							"Foldername": "Assignment10",
-							"filename": "all_countries.parquet"
+							"FolderName": "Assignment10",
+							"Filename": "all_countries.parquet"
 						}
 					}
 				]
+			},
+			{
+				"name": "Web1",
+				"type": "WebActivity",
+				"dependsOn": [
+					{
+						"activity": "Copy data1",
+						"dependencyConditions": [
+							"Failed"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"url": "https://prod-90.eastus.logic.azure.com:443/workflows/c8185515745b43f4bd46ea6be8ca9500/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2GFllKjOFO0vzsjDc8CLMaMkvDGCE_K4Hzo2YUmAK-4",
+					"method": "POST"
+				}
 			}
 		],
 		"folder": {
