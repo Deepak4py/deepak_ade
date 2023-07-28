@@ -608,13 +608,27 @@
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"FolderName": {
+						"type": "string"
+					},
+					"Filename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "sample_parquet_file.parquet",
-						"folderPath": "DataFlowAssesement",
+						"fileName": {
+							"value": "@dataset().Filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().FolderName",
+							"type": "Expression"
+						},
 						"fileSystem": "landing"
 					},
 					"compressionCodec": "none"

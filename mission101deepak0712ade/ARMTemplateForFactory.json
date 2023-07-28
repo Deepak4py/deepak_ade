@@ -69,7 +69,10 @@
 										"Foldername": "DataFlowAssesement",
 										"filename": "Customeraddress.txt"
 									},
-									"sink1": {}
+									"sink1": {
+										"FolderName": "rgrdg",
+										"Filename": "gfgfdgd"
+									}
 								}
 							},
 							"staging": {},
@@ -1362,14 +1365,12 @@
 								}
 							},
 							"sink": {
-								"type": "DelimitedTextSink",
+								"type": "ParquetSink",
 								"storeSettings": {
 									"type": "AzureBlobFSWriteSettings"
 								},
 								"formatSettings": {
-									"type": "DelimitedTextWriteSettings",
-									"quoteAllText": true,
-									"fileExtension": ".txt"
+									"type": "ParquetWriteSettings"
 								}
 							},
 							"enableStaging": false
@@ -1379,20 +1380,48 @@
 								"referenceName": "RestResource1",
 								"type": "DatasetReference",
 								"parameters": {
-									"country_name": "all"
+									"country_name": "allssssssssss"
 								}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "NEW_GENERICS_ADLS_DATASET",
+								"referenceName": "Parquet_file_ds",
 								"type": "DatasetReference",
 								"parameters": {
-									"Foldername": "Assignment10",
-									"filename": "all_countries.parquet"
+									"FolderName": "Assignment10",
+									"Filename": "all_countries.parquet"
 								}
 							}
 						]
+					},
+					{
+						"name": "Web1",
+						"type": "WebActivity",
+						"dependsOn": [
+							{
+								"activity": "Copy data1",
+								"dependencyConditions": [
+									"Failed"
+								]
+							}
+						],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"url": "https://prod-90.eastus.logic.azure.com:443/workflows/c8185515745b43f4bd46ea6be8ca9500/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2GFllKjOFO0vzsjDc8CLMaMkvDGCE_K4Hzo2YUmAK-4",
+							"method": "POST",
+							"headers": {},
+							"body": {
+								"status": "failed"
+							}
+						}
 					}
 				],
 				"policy": {
@@ -1406,7 +1435,7 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/RestResource1')]",
-				"[concat(variables('factoryId'), '/datasets/NEW_GENERICS_ADLS_DATASET')]"
+				"[concat(variables('factoryId'), '/datasets/Parquet_file_ds')]"
 			]
 		},
 		{
@@ -1886,6 +1915,87 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/product')]",
 				"[concat(variables('factoryId'), '/datasets/product_adls')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/demo_for_ekta')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "AzureBlobFSReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "demo_for_ekta",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "NEW_GENERICS_ADLS_DATASET",
+								"type": "DatasetReference",
+								"parameters": {
+									"Foldername": "Ekta",
+									"filename": "demo.json"
+								}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {},
+					"cancelAfter": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/demo_for_ekta')]",
+				"[concat(variables('factoryId'), '/datasets/NEW_GENERICS_ADLS_DATASET')]"
 			]
 		},
 		{
@@ -2840,13 +2950,27 @@
 					"referenceName": "AzureDataLakeStorage1",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"FolderName": {
+						"type": "string"
+					},
+					"Filename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "Parquet",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "sample_parquet_file.parquet",
-						"folderPath": "DataFlowAssesement",
+						"fileName": {
+							"value": "@dataset().Filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().FolderName",
+							"type": "Expression"
+						},
 						"fileSystem": "landing"
 					},
 					"compressionCodec": "none"
@@ -3011,6 +3135,42 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/demo_for_ekta')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_STORAGE_AC",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "us.json",
+						"folderPath": "Assignment10",
+						"fileSystem": "landing"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": false,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"type": "String"
+					},
+					{
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_STORAGE_AC')]"
 			]
 		},
 		{
